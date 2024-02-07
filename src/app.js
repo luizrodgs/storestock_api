@@ -1,6 +1,7 @@
 import express from "express";
 
 const app = express();
+app.use(express.json());
 
 const products = {
     "Xbox Series S": "2",
@@ -15,5 +16,14 @@ app.get("/", (req, res) => {
 app.get("/products", (req, res) => {
     res.status(200).json(products);
 })
+
+app.post("/products", (req, res) => {
+    const productName = Object.keys(req.body)[0];
+    const productQuantity = req.body[productName];
+    products[productName] = productQuantity;
+    res.status(201).send("Product successfully added to stock");
+});
+
+
 
 export default app;
