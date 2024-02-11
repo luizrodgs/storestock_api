@@ -1,4 +1,5 @@
 import { brand } from "../models/Brand.js";
+import product from "../models/Product.js"
 
 class BrandController {
     static async getAllBrands (req, res) {
@@ -19,6 +20,17 @@ class BrandController {
             res.status(500).json({ message: `${erro.message} - get brand by id failed`});
         }
     };
+
+    static async getAllProductsByBrand (req, res) {
+        try {
+            const id = req.params.id;
+            const brandFinded = await brand.findById(id);
+            const productsList = await product.find({ brand: brandFinded });
+            res.status(200).json(productsList);
+        } catch (erro) {
+            res.status(500).json({ message: `${erro.message} - get products by brand failed`});
+        }
+    }
 
     static async updateBrandByID (req, res) {
         try {
