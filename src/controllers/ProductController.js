@@ -1,4 +1,5 @@
 import product from "../models/Product.js";
+import { brand } from "../models/Brand.js";
 
 class ProductController {
     static async getAllProducts (req, res) {
@@ -31,9 +32,12 @@ class ProductController {
     };
 
     static async createProduct (req, res) {
+        const productToCreate = req.body;
         try {
-            const newProduct = await product.create(req.body);
-            res.status(201).json({ message: "Product successfully added to database", product: newProduct});
+            const brandFinded = await brand.findById(productToCreate.brand);
+            const newProduct = { ...productToCreate, brand: { ... brandFinded._doc } };
+            const createdProduct = await product.create(newProduct);
+            res.status(201).json({ message: "Product successfully added to database", product: createdProduct});
         } catch (erro) {
             res.status(500).json({ message: `${erro.message} - product creation failed`});
         }
