@@ -1,8 +1,8 @@
 import { brand } from "../models/Brand.js";
-import product from "../models/Product.js"
+import product from "../models/Product.js";
 
 class BrandController {
-    static async getAllBrands (req, res) {
+    static getAllBrands = async (req, res) => {
         try {
             const brandsList = await brand.find({});
             res.status(200).json(brandsList);
@@ -11,7 +11,7 @@ class BrandController {
         }
     };
 
-    static async getBrandByID (req, res) {
+    static getBrandByID = async (req, res) => {
         try {
             const id = req.params.id;
             const brandFinded = await brand.findById(id);
@@ -21,7 +21,7 @@ class BrandController {
         }
     };
 
-    static async getAllProductsByBrand (req, res) {
+    static getAllProductsByBrand = async (req, res) => {
         try {
             const id = req.params.id;
             const brandFinded = await brand.findById(id);
@@ -30,9 +30,9 @@ class BrandController {
         } catch (erro) {
             res.status(500).json({ message: `${erro.message} - get products by brand failed`});
         }
-    }
+    };
 
-    static async updateBrandByID (req, res) {
+    static updateBrandByID = async (req, res) => {
         try {
             const id = req.params.id;
             await brand.findByIdAndUpdate(id, req.body);
@@ -42,7 +42,7 @@ class BrandController {
         }
     };
 
-    static async createBrand (req, res) {
+    static createBrand = async (req, res) => {
         try {
             const newBrand = await brand.create(req.body);
             res.status(201).json({ message: "Brand successfully added to database", brand: newBrand});
@@ -51,7 +51,7 @@ class BrandController {
         }
     };
 
-    static async deleteBrandByID (req, res) {
+    static deleteBrandByID = async (req, res) => {
         try {
             const id = req.params.id;
             await brand.findByIdAndDelete(id);

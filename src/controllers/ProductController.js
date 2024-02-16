@@ -2,7 +2,7 @@ import product from "../models/Product.js";
 import { brand } from "../models/Brand.js";
 
 class ProductController {
-    static async getAllProducts (req, res) {
+    static getAllProducts = async (req, res) => {
         try {
             const productsList = await product.find({});
             res.status(200).json(productsList);
@@ -11,7 +11,7 @@ class ProductController {
         }
     };
 
-    static async getProductByID (req, res) {
+    static getProductByID = async (req, res) => {
         try {
             const id = req.params.id;
             const productFinded = await product.findById(id);
@@ -21,7 +21,7 @@ class ProductController {
         }
     };
 
-    static async updateProductByID (req, res) {
+    static updateProductByID = async (req, res) => {
         try {
             const id = req.params.id;
             await product.findByIdAndUpdate(id, req.body);
@@ -31,7 +31,7 @@ class ProductController {
         }
     };
 
-    static async createProduct (req, res) {
+    static createProduct = async (req, res) => {
         const productToCreate = req.body;
         try {
             const brandFinded = await brand.findById(productToCreate.brand);
@@ -43,7 +43,7 @@ class ProductController {
         }
     };
 
-    static async deleteProductByID (req, res) {
+    static deleteProductByID = async (req, res) => {
         try {
             const id = req.params.id;
             await product.findByIdAndDelete(id);
