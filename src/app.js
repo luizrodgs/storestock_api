@@ -1,6 +1,7 @@
 import express from "express";
 import connectToDb from "./config/dbConnect.js";
 import routes from "./routes/index.js";
+import errorHandler from "./middlewares/errorHandler.js";
 
 const dbConnection = await connectToDb();
 
@@ -14,5 +15,8 @@ dbConnection.once("open", () => {
 
 const app = express();
 routes(app);
+
+// eslint-disable-next-line no-unused-vars
+app.use(errorHandler);
 
 export default app;
