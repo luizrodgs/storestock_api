@@ -2,6 +2,7 @@ import express from "express";
 import connectToDb from "./config/dbConnect.js";
 import routes from "./routes/index.js";
 import errorHandler from "./middlewares/errorHandler.js";
+import status404Handler from "./middlewares/status404Handler.js";
 
 const dbConnection = await connectToDb();
 
@@ -15,6 +16,8 @@ dbConnection.once("open", () => {
 
 const app = express();
 routes(app);
+
+app.use(status404Handler);
 
 // eslint-disable-next-line no-unused-vars
 app.use(errorHandler);

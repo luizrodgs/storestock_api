@@ -1,6 +1,6 @@
-import baseError from "./baseError.js";
+import BaseError from "./BaseError.js";
 
-class IncorrectRequest extends baseError {
+class IncorrectRequest extends BaseError {
     constructor(message = "Incorrect Request Data") {
         super(message, 400);
     }

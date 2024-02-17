@@ -1,4 +1,4 @@
-class baseError extends Error {
+class BaseError extends Error {
     constructor(message = "Internal Server Error", status = 500) {
         super();
         this.message = message;
@@ -13,4 +13,4 @@ class baseError extends Error {
     }
 }
 
-export default baseError;
+export default BaseError;

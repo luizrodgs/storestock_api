@@ -1,3 +1,4 @@
+import NotFound from "../errors/NotFound.js";
 import { brand } from "../models/Brand.js";
 import product from "../models/Product.js";
 
@@ -19,7 +20,7 @@ class BrandController {
             if (brandFinded !== null){
                 res.status(200).json(brandFinded);
             } else {
-                res.status(404).json({ message: "Brand ID not founded"});
+                next(new NotFound("Brand ID not found"));
             }
         } catch (erro) {
             next(erro);
@@ -30,8 +31,13 @@ class BrandController {
         try {
             const id = req.params.id;
             const brandFinded = await brand.findById(id);
-            const productsList = await product.find({ brand: brandFinded });
-            res.status(200).json(productsList);
+            if (brandFinded !== null){
+                const productsList = await product.find({ brand: brandFinded });
+                res.status(200).json(productsList);
+            } else {
+                next(new NotFound("Brand ID not found"));
+            }
+            
         } catch (erro) {
             next(erro);
         }
@@ -40,8 +46,14 @@ class BrandController {
     static updateBrandByID = async (req, res, next) => {
         try {
             const id = req.params.id;
-            await brand.findByIdAndUpdate(id, req.body);
-            res.status(200).json({ message: "Brand successfully updated on database"});
+            const brandFinded = await brand.findById(id);
+            if (brandFinded !== null){
+                await brand.findByIdAndUpdate(id, req.body);
+                res.status(200).json({ message: "Brand successfully updated on database"});
+            } else {
+                next(new NotFound("Brand ID not found"));
+            }
+
         } catch (erro) {
             next(erro);
         }
@@ -59,8 +71,14 @@ class BrandController {
     static deleteBrandByID = async (req, res, next) => {
         try {
             const id = req.params.id;
-            await brand.findByIdAndDelete(id);
-            res.status(200).json({ message: "Brand successfully deleted on database"});
+            const brandFinded = await brand.findById(id);
+            if (brandFinded !== null){
+                await brand.findByIdAndDelete(id);
+                res.status(200).json({ message: "Brand successfully deleted on database"});
+            } else {
+                next(new NotFound("Brand ID not found"));
+            }
+
         } catch (erro) {
             next(erro);
         }

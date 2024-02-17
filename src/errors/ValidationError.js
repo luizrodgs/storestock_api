@@ -1,4 +1,4 @@
-import IncorrectRequest from "./incorrectRequest.js";
+import IncorrectRequest from "./IncorrectRequest.js";
 
 class ValidationError extends IncorrectRequest {
     constructor(erro) {
